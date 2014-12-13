@@ -131,7 +131,7 @@ EOB
         if @argv.empty?
           return [$stdin.to_reek_source('$stdin')]
         else
-          return Source::SourceLocator.new(@argv).all_sources
+          return Source::SourceLocator.new(@argv).sources
         end
       end
 

@@ -37,7 +37,7 @@ class Dirty
 end
 ```
 
-Reek will report the following code smells in this file:
+`reek` will report the following code smells in this file:
 
 ```
 $ reek demo.rb
@@ -60,6 +60,8 @@ spec/samples/demo/demo.rb -- 6 warnings:
 
 ## Configuration
 
+### CLI
+
 For a basic overview, run
 
 ```Ruby
@@ -68,11 +70,45 @@ reek --help
 
 For a summary of those CLI options see [Command-Line Options](https://github.com/troessner/reek/wiki/Command-Line-Options).
 
-Apart from that, `reek` offers quite a few ways for configuring it:
+### Via configuration files
 
-* The first thing you probably want to check out are the [Basic Smell Options](https://github.com/troessner/reek/wiki/Basic-Smell-Options)
-* `reek` is not the police. In case you need to suppress a smell warning for whatever reasons have a look at [Smell Suppression](https://github.com/troessner/reek/wiki/Smell-Suppression)
-* Lastly there are a couple of ways to configure `reek` via [Configuration Files](https://github.com/troessner/reek/wiki/Configuration-Files)
+In the most simple case, you can just drop a file called "settings.reek" in your root directory (name doesnt matter as long as it ends with "reek") and `reek` will just pick it up.
+
+Here's a simple example:
+
+```Yaml
+---
+Exclude:
+  - "vendor"
+  - "lib/not-your-code"
+  - "lib/your-code/smelly.rb"
+FeatureEnvy:
+  exclude:
+    - "AngularHelper"
+    - "ApplicationController#http_auth_enabled?"
+```
+
+This would exlude the "vendor" directory and the "lib/not-your-code" directory as well as the single file "lib/your-code/smelly.rb" from scanning.
+Furthermore `reek` would not report the [Feature Envy](https://github.com/troessner/reek/wiki/Feature-Envy) smell for "AngularHelper" and the "http_auth_enabled?" method in "ApplicationController".
+
+Check out [Configuration Files](https://github.com/troessner/reek/wiki/Configuration-Files) and especially [Basic Smell Options](https://github.com/troessner/reek/wiki/Basic-Smell-Options) for further details.
+
+
+### Smell suppression
+
+ `reek` is not the police. In case you need to suppress a smell warning for whatever reasons have a look at [Smell Suppression](https://github.com/troessner/reek/wiki/Smell-Suppression)
+
+### Exclude directories
+
+List the directories and files you do not want to be scanned under the "Exclude" key like this:
+
+```Yaml
+---
+Exclude:
+  - "vendor"
+  - "lib/not-your-code"
+  - "lib/your-code/smelly.rb"
+```
 
 ## Integration
 

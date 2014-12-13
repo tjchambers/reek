@@ -1,0 +1,4 @@
+---
+Exclude:
+  - "spec/samples/exclude_paths/exclude_dir/"
+  - "spec/samples/exclude_paths/exclude_file.rb"

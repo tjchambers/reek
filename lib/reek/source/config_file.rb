@@ -1,5 +1,6 @@
 require 'yaml'
 require 'reek/config_file_exception'
+require 'reek/source/global_exclude_configuration'
 
 module Reek
   module Source
@@ -13,18 +14,30 @@ module Reek
       #
       def initialize(file_path)
         @file_path = file_path
-        @hash = load
+        @hash = load.select do |key, value|
+          case
+          when configuration_for_smell_type?(key)
+            true
+          when key == GlobalExcludeConfiguration.key
+            GlobalExcludeConfiguration.configure(value)
+            false
+          else
+            raise ArgumentError, "Unknown configuration key #{key}"
+          end
+        end
       end
 
       #
       # Configure the given sniffer using the contents of the config file.
       #
       def configure(sniffer)
-        @hash.each do |klass_name, config|
-          klass = find_class(klass_name)
+        @hash.each do |key, config|
+          klass = find_class(key)
           sniffer.configure(klass, config) if klass
         end
       end
+
+      private
 
       #
       # Find the class with this name if it exsits.
@@ -62,7 +75,9 @@ module Reek
         result
       end
 
-      private
+      def configuration_for_smell_type?(key)
+        Reek::Smells.const_get(key) rescue false
+      end
 
       #
       # Report invalid configuration file to standard

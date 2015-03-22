@@ -3,7 +3,8 @@ Feature: Report smells using simple JSON layout
   output a list of smells in JSON.
 
   Scenario: output is empty when there are no smells
-    When I run reek --format json spec/samples/three_clean_files
+    Given a directory with clean files
+    When I run reek --format json clean_files
     Then it succeeds
     And it reports this JSON:
     """
@@ -11,7 +12,8 @@ Feature: Report smells using simple JSON layout
     """
 
   Scenario: Indicate smells and print them as JSON when using files
-    When I run reek --format json spec/samples/standard_smelly/minimal_dirty.rb
+    Given a minimal dirty file
+    When I run reek --format json minimal_dirty.rb
     Then the exit status indicates smells
     And it reports this JSON:
       """
@@ -19,7 +21,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "IrresponsibleModule",
               "smell_type": "IrresponsibleModule",
-              "source": "spec/samples/standard_smelly/minimal_dirty.rb",
+              "source": "minimal_dirty.rb",
               "context": "C",
               "lines": [
                   1
@@ -30,7 +32,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "UncommunicativeName",
               "smell_type": "UncommunicativeModuleName",
-              "source": "spec/samples/standard_smelly/minimal_dirty.rb",
+              "source": "minimal_dirty.rb",
               "context": "C",
               "lines": [
                   1
@@ -41,7 +43,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "UncommunicativeName",
               "smell_type": "UncommunicativeMethodName",
-              "source": "spec/samples/standard_smelly/minimal_dirty.rb",
+              "source": "minimal_dirty.rb",
               "context": "C#m",
               "lines": [
                   2

@@ -11,51 +11,58 @@ Feature: Offer different ways how to load configuration
   And finally, it should check your HOME directory.
 
   Scenario: No configuration
-    When I run reek spec/samples/configuration_loading/minimal_dirty.rb
+    Given a minimal dirty file
+    When I run reek minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      spec/samples/configuration_loading/minimal_dirty.rb -- 3 warnings:
+      minimal_dirty.rb -- 3 warnings:
         [1]:C has no descriptive comment (IrresponsibleModule)
         [1]:C has the name 'C' (UncommunicativeModuleName)
         [2]:C#m has the name 'm' (UncommunicativeMethodName)
       """
 
   Scenario: Configuration via CLI
-    When I run reek -c spec/samples/minimal_smelly_and_masked/config.reek spec/samples/minimal_smelly_and_masked/minimal_dirty.rb
+    Given a minimal dirty file
+    And a masking configuration file
+    When I run reek -c config.reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   @remove-disable-smell-config-from-current-dir
   Scenario: Configuration file in working directory
+    Given a minimal dirty file
     Given "spec/samples/configuration_loading/reek-test-run-disable_smells.reek" exists in the working directory
-    When I run reek spec/samples/configuration_loading/minimal_dirty.rb
+    When I run reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   @remove-disable-smell-config-from-parent-dir
   Scenario: Configuration file in the parent directory of the working directory
+    Given a minimal dirty file
     Given "spec/samples/configuration_loading/reek-test-run-disable_smells.reek" exists in the parent directory of the working directory
-    When I run reek spec/samples/configuration_loading/minimal_dirty.rb
+    When I run reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   @remove-disable-smell-config-from-home-dir
   Scenario: Configuration file in the HOME directory
+    Given a minimal dirty file
     Given "spec/samples/configuration_loading/reek-test-run-disable_smells.reek" exists in the HOME directory
-    When I run reek spec/samples/configuration_loading/minimal_dirty.rb
+    When I run reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   @remove-enable-smell-config-from-current-dir @remove-disable-smell-config-from-parent-dir
   Scenario: Two opposing configuration files and we stop after the first one
+    Given a minimal dirty file
     Given "spec/samples/configuration_loading/reek-test-run-enable_smells.reek" exists in the working directory
     And "spec/samples/configuration_loading/reek-test-run-disable_smells.reek" exists in the parent directory of the working directory
-    When I run reek spec/samples/configuration_loading/minimal_dirty.rb
+    When I run reek minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      spec/samples/configuration_loading/minimal_dirty.rb -- 3 warnings:
+      minimal_dirty.rb -- 3 warnings:
         [1]:C has no descriptive comment (IrresponsibleModule)
         [1]:C has the name 'C' (UncommunicativeModuleName)
         [2]:C#m has the name 'm' (UncommunicativeMethodName)

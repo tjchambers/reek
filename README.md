@@ -41,7 +41,7 @@ Reek will report the following code smells in this file:
 
 ```
 $ reek demo.rb
-spec/samples/demo/demo.rb -- 6 warnings:
+demo.rb -- 6 warnings:
   Dirty has no descriptive comment (IrresponsibleModule)
   Dirty#awful has 4 parameters (LongParameterList)
   Dirty#awful has boolean parameter 'log' (ControlCouple)

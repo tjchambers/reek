@@ -139,7 +139,7 @@ Given(/^a corrupt config file$/) do
   write_file('corrupt.reek', 'This is not a config file')
 end
 
-Given(/^a masking configuration file/) do
+Given(/^a masking configuration file$/) do
   write_file('config.reek', <<-EOS)
 ---
 IrresponsibleModule:
@@ -176,5 +176,44 @@ UncommunicativeVariableName:
   reject:
   - !ruby/regexp /^.$/
   - !ruby/regexp /[0-9]$/
+  EOS
+end
+
+Given(/^a minimal dirty file in a subdirectory$/) do
+  write_file 'subdir/minimal_dirty.rb', <<-EOS
+class C
+  def m
+  end
+end
+  EOS
+end
+
+When(/^I run "reek (.*?)" in the subdirectory$/) do |args|
+  cd 'subdir'
+  reek(args)
+end
+
+Given(/^a masking configuration file in the HOME directory$/) do
+  set_env('HOME', File.expand_path(File.join(current_dir, 'home')))
+  write_file('home/config.reek', <<-EOS)
+---
+IrresponsibleModule:
+  enabled: false
+UncommunicativeModuleName:
+  enabled: false
+UncommunicativeMethodName:
+  enabled: false
+  EOS
+end
+
+Given(/^an enabling configuration file in the subdirectory$/) do
+  write_file('subdir/config.reek', <<-EOS)
+---
+IrresponsibleModule:
+  enabled: true
+UncommunicativeModuleName:
+  enabled: true
+UncommunicativeMethodName:
+  enabled: true
   EOS
 end

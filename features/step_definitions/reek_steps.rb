@@ -77,15 +77,3 @@ end
 Then /^it reports the current version$/ do
   assert_exact_output "reek #{Reek::Version::STRING}\n", all_stdout
 end
-
-Given(/^"(.*?)" exists in the working directory$/) do |path|
-  FileUtils.cp path, Pathname.pwd
-end
-
-Given(/^"(.*?)" exists in the parent directory of the working directory$/) do |path|
-  FileUtils.cp path, Pathname.pwd.parent
-end
-
-Given(/^"(.*?)" exists in the HOME directory$/) do |path|
-  FileUtils.cp path, Pathname.new(Dir.home)
-end

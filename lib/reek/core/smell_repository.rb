@@ -1,5 +1,6 @@
 require 'reek/smells'
 require 'reek/smells/smell_detector'
+require 'reek/configuration/app_configuration'
 
 module Reek
   module Core

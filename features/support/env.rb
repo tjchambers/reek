@@ -34,3 +34,7 @@ end
 World do
   ReekWorld.new
 end
+
+Before do
+  @aruba_timeout_seconds = 12
+end

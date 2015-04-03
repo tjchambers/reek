@@ -61,7 +61,7 @@ module Reek
       #
       def examine_context(method_ctx)
         return [] if method_ctx.num_statements == 0
-        return [] if depends_on_instance?(method_ctx.exp)
+        return [] if method_ctx.exp.depends_on_instance?
         return [] if num_helper_methods(method_ctx) <= value(HELPER_CALLS_LIMIT_KEY,
                                                              method_ctx,
                                                              DEFAULT_HELPER_CALLS_LIMIT)
@@ -74,10 +74,6 @@ module Reek
       end
 
       private
-
-      def depends_on_instance?(exp)
-        exp.depends_on_instance?
-      end
 
       def num_helper_methods(method_ctx)
         method_ctx.local_nodes(:send).length

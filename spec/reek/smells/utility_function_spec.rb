@@ -85,6 +85,7 @@ describe Reek::Smells::UtilityFunction do
     it 'reports two calls' do
       src = 'def simple(arga) arga.to_s + arga.to_i end'
       expect(src).to reek_of(:UtilityFunction,  name: 'simple')
+      expect(src).not_to reek_of(:FeatureEnvy)
     end
 
     it 'counts a local call in a param initializer' do
@@ -107,7 +108,9 @@ describe Reek::Smells::UtilityFunction do
     end
 
     it 'should report message chain' do
-      expect('def simple(arga) arga.b.c end').to reek_of(:UtilityFunction,  name: 'simple')
+      src = 'def simple(arga) arga.b.c end'
+      expect(src).to reek_of(:UtilityFunction,  name: 'simple')
+      expect(src).not_to reek_of(:FeatureEnvy)
     end
 
     it 'does not report a method that calls super' do

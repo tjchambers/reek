@@ -180,8 +180,12 @@ module Reek
 
       # Utility methods for :lvar nodes.
       module LvarNode
+        include VariableBase
+        # TODO: Replace with name().
         def var_name() self[1] end
       end
+
+      LvasgnNode = LvarNode
 
       # Base module for utility methods for :def and :defs nodes.
       module MethodNodeBase
@@ -251,6 +255,10 @@ module Reek
         def full_name(outer)
           prefix = outer == '' ? '' : "#{outer}#"
           "#{prefix}#{SexpNode.format(receiver)}.#{name}"
+        end
+
+        def depends_on_instance?
+          false
         end
       end
 

@@ -6,7 +6,8 @@ describe Reek::Smells::UtilityFunction do
   describe 'a detector' do
     before(:each) do
       @source_name = 'dummy_source'
-      @detector = build(:smell_detector, smell_type: :UtilityFunction,
+      @detector = build(:smell_detector,
+                        smell_type: :UtilityFunction,
                         source: @source_name)
     end
 
@@ -132,5 +133,4 @@ describe Reek::Smells::UtilityFunction do
       expect(src).not_to reek_of(:UtilityFunction)
     end
   end
-
 end

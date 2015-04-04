@@ -3,10 +3,10 @@ Feature: Overriding current rules by specifying new configuration values
   As a developer
   I want to be able to override the default configuration values
 
-  Scenario: List of configuration values is overridden by a lower config file
-    Given a file with smelly variable names
-    And a configuration allowing camel case variables
-    When I run reek -c config.reek camel_case.rb
+  Scenario: List of configuration values is overridden by a lower configuration file
+    Given a file with smelly variable names called 'camel_case.rb'
+    And a configuration file allowing camel case variables
+    When I run reek camel_case.rb
     Then the exit status indicates smells
     And it reports:
       """

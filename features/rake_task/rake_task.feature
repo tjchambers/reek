@@ -3,7 +3,7 @@ Feature: Reek can be driven through its Task
   via the Task class. These scenarios test its various options.
 
   Scenario: source_files points at the desired files
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run rake reek with:
       """
       Reek::Rake::Task.new do |t|
@@ -21,7 +21,7 @@ Feature: Reek can be driven through its Task
       """
 
   Scenario: name changes the task name
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run rake silky with:
       """
       Reek::Rake::Task.new('silky') do |t|
@@ -39,7 +39,7 @@ Feature: Reek can be driven through its Task
       """
 
   Scenario: verbose prints the reek command
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run rake reek with:
       """
       Reek::Rake::Task.new do |t|
@@ -51,7 +51,7 @@ Feature: Reek can be driven through its Task
     And stdout includes "Running 'reek' rake command"
 
   Scenario: fail_on_error can hide the error status
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run rake reek with:
       """
       Reek::Rake::Task.new do |t|
@@ -71,8 +71,8 @@ Feature: Reek can be driven through its Task
       """
 
   Scenario: can be configured with config_file
-    Given a minimal dirty file
-    And a masking configuration file
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    And a masking configuration file called 'config.reek'
     When I run rake reek with:
       """
       Reek::Rake::Task.new do |t|

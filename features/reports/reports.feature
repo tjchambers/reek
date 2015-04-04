@@ -4,7 +4,7 @@ Feature: Correctly formatted reports
   I want to be able to parse reek's output simply and consistently
 
   Scenario Outline: two reports run together with indented smells
-    Given a directory with two smelly files
+    Given a directory called 'smelly' containing two smelly files
     When I run reek <args>
     Then the exit status indicates smells
     And it reports:
@@ -32,7 +32,7 @@ Feature: Correctly formatted reports
       | smelly                                  |
 
   Scenario Outline: No sorting (which means report each file as it is read in)
-    Given a directory with three different smelly files
+    Given a directory called 'smelly' containing three different smelly files
     When I run reek <option> smelly
     Then the exit status indicates smells
     And it reports:
@@ -59,7 +59,7 @@ Feature: Correctly formatted reports
       | --sort-by n    |
 
   Scenario Outline: Sort by issue count
-    Given a directory with three different smelly files
+    Given a directory called 'smelly' containing three different smelly files
     When I run reek <option> smelly
     Then the exit status indicates smells
     And it reports:
@@ -85,7 +85,7 @@ Feature: Correctly formatted reports
       | --sort-by s          |
 
   Scenario: good files show no headings by default
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek clean_files
     Then it succeeds
     And it reports:
@@ -94,7 +94,7 @@ Feature: Correctly formatted reports
       """
 
   Scenario Outline: --empty-headings turns on headings for fragrant files
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek <option> clean_files
     Then it succeeds
     And it reports:
@@ -111,7 +111,7 @@ Feature: Correctly formatted reports
       | -V                |
 
   Scenario Outline: --no-empty-headings turns off headings for fragrant files
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek <option> clean_files
     Then it succeeds
     And it reports:
@@ -125,7 +125,7 @@ Feature: Correctly formatted reports
       | -V --no-empty-headings |
 
   Scenario Outline: --no-line-numbers turns off line numbers
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -146,7 +146,7 @@ Feature: Correctly formatted reports
       | -V --no-line-numbers |
 
   Scenario Outline: --line-numbers turns on line numbers
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -167,7 +167,7 @@ Feature: Correctly formatted reports
       | --no-line-numbers -n             |
 
   Scenario Outline: --single-line shows filename and one line number
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -189,7 +189,7 @@ Feature: Correctly formatted reports
       | -V -s         |
 
   Scenario Outline: Extra slashes aren't added to directory names
-    Given a directory with two smelly files
+    Given a directory called 'smelly' containing two smelly files
     When I run reek <args>
     Then the exit status indicates smells
     And it reports:
@@ -217,7 +217,7 @@ Feature: Correctly formatted reports
       | smelly  |
 
   Scenario Outline: -U or --wiki-links adds helpful links to smell warnings
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run reek <option> minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
@@ -234,7 +234,7 @@ Feature: Correctly formatted reports
       | --wiki-links  |
 
   Scenario Outline: --wiki-links is independent of --line-numbers
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run reek <option> minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:

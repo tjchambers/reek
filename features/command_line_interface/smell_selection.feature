@@ -4,7 +4,7 @@ Feature: Smell selection
   I want to be able to selectively activate smell detectors
 
   Scenario: --smell selects a smell to detect
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     When I run reek --no-line-numbers --smell DuplicateMethodCall smelly.rb
     Then the exit status indicates smells
     And it reports:

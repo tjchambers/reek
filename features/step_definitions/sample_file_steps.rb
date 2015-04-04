@@ -12,7 +12,7 @@ end
   write_file('demo/demo.rb', contents)
 end
 
-Given(/^a smelly file$/) do
+Given(/^a smelly file called 'smelly.rb'$/) do
   contents = <<-EOS
 # smelly class for testing purposes
 class Dirty
@@ -26,7 +26,7 @@ end
   write_file('smelly.rb', contents)
 end
 
-Given(/^a smelly file with inline masking$/) do
+Given(/^a smelly file with inline masking called 'inline.rb'$/) do
   write_file 'inline.rb', <<-EOS
 # :reek:DuplicateMethodCall: { allow_calls: [ puts ] }
 # smells of :reek:NestedIterators but ignores them
@@ -52,7 +52,7 @@ Given(/^the "(.*?)" sample file exists$/) do |file_name|
   in_current_dir { FileUtils.cp full_path, file_name }
 end
 
-Given(/^a directory with clean files$/) do
+Given(/^a directory called 'clean_files' containing some clean files$/) do
   contents = <<-EOS
 # clean class for testing purposes
 class Clean
@@ -67,7 +67,7 @@ end
   write_file 'clean_files/clean_three.rb', contents
 end
 
-Given(/^a directory with two smelly files$/) do
+Given(/^a directory called 'smelly' containing two smelly files$/) do
   contents = <<-EOS
 # smelly class for testing purposes
 class Dirty
@@ -82,7 +82,7 @@ end
   write_file('smelly/dirty_two.rb', contents)
 end
 
-Given(/^a directory with three different smelly files$/) do
+Given(/^a directory called 'smelly' containing three different smelly files$/) do
   write_file('smelly/dirty_one.rb', <<-EOS)
 class Dirty
   def a; end
@@ -103,7 +103,7 @@ end
   EOS
 end
 
-Given(/^a minimal dirty file$/) do
+Given(/^a minimal dirty file called 'minimal_dirty.rb'$/) do
   write_file 'minimal_dirty.rb', <<-EOS
 class C
   def m
@@ -112,7 +112,7 @@ end
   EOS
 end
 
-Given(/^a file with smelly variable names$/) do
+Given(/^a file with smelly variable names called 'camel_case.rb'$/) do
   write_file('camel_case.rb', <<-EOS)
 # Class containing camelCase variable which would normally smell
 class CamelCase
@@ -131,15 +131,15 @@ end
   EOS
 end
 
-Given(/^an empty config file$/) do
+Given(/^an empty configuration file called 'empty.reek'$/) do
   write_file('empty.reek', '')
 end
 
-Given(/^a corrupt config file$/) do
-  write_file('corrupt.reek', 'This is not a config file')
+Given(/^a corrupt configuration file called 'corrupt.reek'$/) do
+  write_file('corrupt.reek', 'This is not a configuration file')
 end
 
-Given(/^a masking configuration file$/) do
+Given(/^a masking configuration file called 'config.reek'$/) do
   write_file('config.reek', <<-EOS)
 ---
 IrresponsibleModule:
@@ -155,7 +155,7 @@ UnusedParameters:
   EOS
 end
 
-Given(/^a configuration file masking some duplication smells$/) do
+Given(/^a configuration file masking some duplication smells called 'config.reek'$/) do
   write_file('config.reek', <<-EOS)
 ---
 DuplicateMethodCall:
@@ -168,7 +168,7 @@ UncommunicativeMethodName:
   EOS
 end
 
-Given(/^a configuration allowing camel case variables$/) do
+Given(/^a configuration file allowing camel case variables$/) do
   write_file('config.reek', <<-EOS)
 ---
 UncommunicativeVariableName:
@@ -179,7 +179,7 @@ UncommunicativeVariableName:
   EOS
 end
 
-Given(/^a minimal dirty file in a subdirectory$/) do
+Given(/^a minimal dirty file called 'minimal_dirty.rb' in a subdirectory$/) do
   write_file 'subdir/minimal_dirty.rb', <<-EOS
 class C
   def m

@@ -3,7 +3,7 @@ Feature: Report smells using simple YAML layout
   output a list of smells in Yaml.
 
   Scenario: output is empty when there are no smells
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek --format yaml clean_files
     Then it succeeds
     And it reports this yaml:
@@ -12,7 +12,7 @@ Feature: Report smells using simple YAML layout
     """
 
   Scenario: Indicate smells and print them as yaml when using files
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run reek --format yaml minimal_dirty.rb
     Then the exit status indicates smells
     And it reports this yaml:

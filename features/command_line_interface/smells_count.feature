@@ -3,7 +3,7 @@ Feature: Reports total number of code smells
   Reek outputs the total number of smells among all files inspected.
 
   Scenario: Does not output total number of smells when inspecting single file
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     When I run reek smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -18,7 +18,7 @@ Feature: Reports total number of code smells
     """
 
   Scenario: Output total number of smells when inspecting multiple files
-    Given a directory with two smelly files
+    Given a directory called 'smelly' containing two smelly files
     When I run reek smelly
     Then the exit status indicates smells
     And it reports:
@@ -41,7 +41,7 @@ Feature: Reports total number of code smells
     """
 
   Scenario: Output total number of smells even if total equals 0
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek clean_files
     Then it succeeds
     And it reports:

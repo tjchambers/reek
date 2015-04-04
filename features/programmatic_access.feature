@@ -4,7 +4,7 @@ Feature: Using reek programmatically
   I want to be able to use its classes
 
   Scenario:
-    Given a smelly file
+    Given a smelly file called 'smelly.rb'
     And a file named "examine.rb" with:
       """
       require 'reek'

@@ -11,7 +11,7 @@ Feature: Offer different ways how to load configuration
   And finally, it should check your HOME directory.
 
   Scenario: No configuration
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run reek minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
@@ -23,37 +23,37 @@ Feature: Offer different ways how to load configuration
       """
 
   Scenario: Configuration via CLI
-    Given a minimal dirty file
-    And a masking configuration file
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    And a masking configuration file called 'config.reek'
     When I run reek -c config.reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   Scenario: Configuration file in working directory
-    Given a minimal dirty file
-    And a masking configuration file
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    And a masking configuration file called 'config.reek'
     When I run reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   Scenario: Configuration file in the parent directory of the working directory
-    Given a minimal dirty file in a subdirectory
-    And a masking configuration file
+    Given a minimal dirty file called 'minimal_dirty.rb' in a subdirectory
+    And a masking configuration file called 'config.reek'
     When I run "reek minimal_dirty.rb" in the subdirectory
     Then it reports no errors
     And it succeeds
 
   Scenario: Configuration file in the HOME directory
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     And a masking configuration file in the HOME directory
     When I run reek minimal_dirty.rb
     Then it reports no errors
     And it succeeds
 
   Scenario: Two opposing configuration files and we stop after the first one
-    Given a minimal dirty file in a subdirectory
+    Given a minimal dirty file called 'minimal_dirty.rb' in a subdirectory
     And an enabling configuration file in the subdirectory
-    And a masking configuration file
+    And a masking configuration file called 'config.reek'
     When I run "reek minimal_dirty.rb" in the subdirectory
     Then the exit status indicates smells
     And it reports:

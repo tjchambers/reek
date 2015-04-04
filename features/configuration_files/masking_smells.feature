@@ -4,8 +4,8 @@ Feature: Masking smells using config files
   I want to mask some smells using config files
 
   Scenario: empty config file is ignored
-    Given a smelly file
-    And an empty config file
+    Given a smelly file called 'smelly.rb'
+    And an empty configuration file called 'empty.reek'
     When I run reek -c empty.reek smelly.rb
     Then it reports the error 'Warning: Invalid configuration file "empty.reek" -- Empty file'
     And the exit status indicates smells
@@ -21,8 +21,8 @@ Feature: Masking smells using config files
       """
 
   Scenario: corrupt config file prevents normal output
-    Given a smelly file
-    And a corrupt config file
+    Given a smelly file called 'smelly.rb'
+    And a corrupt configuration file called 'corrupt.reek'
     When I run reek -c corrupt.reek smelly.rb
     Then it reports the error 'Error: Invalid configuration file "corrupt.reek" -- Not a hash'
     And the exit status indicates an error
@@ -32,9 +32,9 @@ Feature: Masking smells using config files
     When I run reek not_here.rb
     Then it reports the error "Error: No such file - not_here.rb"
 
-  Scenario: masking smells in the config file
-    Given a smelly file
-    And a masking configuration file
+  Scenario: masking smells in the configuration file
+    Given a smelly file called 'smelly.rb'
+    And a masking configuration file called 'config.reek'
     When I run reek -c config.reek smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -46,8 +46,8 @@ Feature: Masking smells using config files
       """
 
   Scenario: allow masking some calls for duplication smell
-    Given a smelly file
-    And a configuration file masking some duplication smells
+    Given a smelly file called 'smelly.rb'
+    And a configuration file masking some duplication smells called 'config.reek'
     When I run reek -c config.reek smelly.rb
     Then the exit status indicates smells
     And it reports:
@@ -58,8 +58,8 @@ Feature: Masking smells using config files
       """
 
   Scenario: provide extra masking inline in comments
-    Given a smelly file with inline masking
-    And a masking configuration file
+    Given a smelly file with inline masking called 'inline.rb'
+    And a masking configuration file called 'config.reek'
     When I run reek -c config.reek inline.rb
     Then the exit status indicates smells
     And it reports:

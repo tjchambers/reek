@@ -3,7 +3,7 @@ Feature: Report smells using simple JSON layout
   output a list of smells in JSON.
 
   Scenario: output is empty when there are no smells
-    Given a directory with clean files
+    Given a directory called 'clean_files' containing some clean files
     When I run reek --format json clean_files
     Then it succeeds
     And it reports this JSON:
@@ -12,7 +12,7 @@ Feature: Report smells using simple JSON layout
     """
 
   Scenario: Indicate smells and print them as JSON when using files
-    Given a minimal dirty file
+    Given a minimal dirty file called 'minimal_dirty.rb'
     When I run reek --format json minimal_dirty.rb
     Then the exit status indicates smells
     And it reports this JSON:

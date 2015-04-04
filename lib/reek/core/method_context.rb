@@ -41,11 +41,11 @@ module Reek
         receiver ||= [:self]
         case receiver[0]
         when :lvasgn
-          @refs.record_reference_to(receiver.updated(:lvar))
+          @refs.record_reference_to(receiver.name)
         when :lvar
-          @refs.record_reference_to(receiver) unless meth == :new
-        when :send
-          @refs.record_reference_to(receiver) if receiver.method_name == :new
+          @refs.record_reference_to(receiver.name) unless meth == :new
+        when :const
+          @refs.record_reference_to(receiver.name)
         when :self
           @refs.record_reference_to(:self)
         end

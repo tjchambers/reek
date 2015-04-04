@@ -139,6 +139,7 @@ describe Reek::Smells::FeatureEnvy do
   it 'counts =~ as a call' do
     src = <<-EOS
     def foo arg
+      bar(arg.baz)
       arg =~ /bar/
     end
     EOS
@@ -148,6 +149,7 @@ describe Reek::Smells::FeatureEnvy do
   it 'counts += as a call' do
     src = <<-EOS
     def foo arg
+      bar(arg.baz)
       arg += 1
     end
     EOS

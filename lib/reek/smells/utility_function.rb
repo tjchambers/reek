@@ -38,7 +38,7 @@ module Reek
       # this number of method calls on other objects will be considered a
       # candidate Utility Function.
       HELPER_CALLS_LIMIT_KEY = 'max_helper_calls'
-      DEFAULT_HELPER_CALLS_LIMIT = 1
+      DEFAULT_HELPER_CALLS_LIMIT = 0
 
       def self.smell_category
         'LowCohesion'

@@ -72,12 +72,12 @@ describe Reek::Smells::UtilityFunction do
   end
 
   context 'with only one call' do
-    it 'does not report a call to a parameter' do
-      expect('def simple(arga) arga.to_s end').not_to reek_of(:UtilityFunction,  name: 'simple')
+    it 'reports a call to a parameter' do
+      expect('def simple(arga) arga.to_s end').to reek_of(:UtilityFunction,  name: 'simple')
     end
 
-    it 'does not report a call to a constant' do
-      expect('def simple(arga) FIELDS[arga] end').not_to reek_of(:UtilityFunction)
+    it 'reports a call to a constant' do
+      expect('def simple(arga) FIELDS[arga] end').to reek_of(:UtilityFunction)
     end
   end
 

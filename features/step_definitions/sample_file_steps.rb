@@ -1,15 +1,15 @@
-Given(/^a demo directory with a smelly file$/) do
+Given(/^the smelly file 'demo.rb' from the example in the README$/) do
   contents = <<-EOS
 class Dirty
   # This method smells of :reek:NestedIterators but ignores them
   def awful(x, y, offset = 0, log = false)
     puts @screen.title
-    @screen = widgets.map {|w| w.each {|key| key += 3}}
+    @screen = widgets.map {|w| w.each {|key| key += 3 * x}}
     puts @screen.contents
   end
 end
   EOS
-  write_file('demo/demo.rb', contents)
+  write_file('demo.rb', contents)
 end
 
 Given(/^a smelly file called 'smelly.rb'$/) do

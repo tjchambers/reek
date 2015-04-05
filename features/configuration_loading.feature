@@ -17,9 +17,9 @@ Feature: Offer different ways how to load configuration
     And it reports:
       """
       minimal_dirty.rb -- 3 warnings:
-        [1]:C has no descriptive comment (IrresponsibleModule)
-        [1]:C has the name 'C' (UncommunicativeModuleName)
-        [2]:C#m has the name 'm' (UncommunicativeMethodName)
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
   Scenario: Configuration via CLI
@@ -59,7 +59,7 @@ Feature: Offer different ways how to load configuration
     And it reports:
       """
       minimal_dirty.rb -- 3 warnings:
-        [1]:C has no descriptive comment (IrresponsibleModule)
-        [1]:C has the name 'C' (UncommunicativeModuleName)
-        [2]:C#m has the name 'm' (UncommunicativeMethodName)
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """

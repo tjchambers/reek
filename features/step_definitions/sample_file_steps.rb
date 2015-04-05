@@ -12,35 +12,13 @@ end
   write_file('demo.rb', contents)
 end
 
-Given(/^a smelly file called 'smelly.rb'$/) do
-  contents = <<-EOS
-# smelly class for testing purposes
-class Dirty
-  def a
-    puts @s.title
-    @s = fred.map {|x| x.each {|key| key += 3}}
-    puts @s.title
-  end
-end
-  EOS
-  write_file('smelly.rb', contents)
-end
-
 Given(/^a smelly file with inline masking called 'inline.rb'$/) do
   write_file 'inline.rb', <<-EOS
-# :reek:DuplicateMethodCall: { allow_calls: [ puts ] }
 # smells of :reek:NestedIterators but ignores them
 class Dirty
   def a
     puts @s.title
-    @s = fred.map {|x| x.each {|key| key += 3}}
-    puts @s.title
-  end
-
-  # :reek:DuplicateMethodCall: { max_calls: 2 }
-  def b
-    puts @s.title
-    @s = fred.map {|x| x.each {|key| key += 3}}
+    @s = foo.map {|x| x.each {|key| key += 3}}
     puts @s.title
   end
 end
@@ -73,7 +51,7 @@ Given(/^a directory called 'smelly' containing two smelly files$/) do
 class Dirty
   def a
     puts @s.title
-    @s = fred.map {|x| x.each {|key| key += 3}}
+    @s = foo.map {|x| x.each {|key| key += 3}}
     puts @s.title
   end
 end
@@ -103,10 +81,14 @@ end
   EOS
 end
 
-Given(/^a minimal dirty file called 'minimal_dirty.rb'$/) do
-  write_file 'minimal_dirty.rb', <<-EOS
-class C
+Given(/^a minimal dirty file called 'minimal_dirty.rb'( in a subdirectory)?$/) do |in_subdir|
+  file_name = in_subdir ? 'subdir/minimal_dirty.rb' : 'minimal_dirty.rb'
+  write_file file_name, <<-EOS
+# smelly class for testing purposes
+class Smelly
   def m
+    puts @foo.bar
+    puts @foo.bar
   end
 end
   EOS
@@ -142,15 +124,9 @@ end
 Given(/^a masking configuration file called 'config.reek'$/) do
   write_file('config.reek', <<-EOS)
 ---
-IrresponsibleModule:
-  enabled: false
-UncommunicativeVariableName:
-  enabled: false
-UncommunicativeModuleName:
+DuplicateMethodCall:
   enabled: false
 UncommunicativeMethodName:
-  enabled: false
-UnusedParameters:
   enabled: false
   EOS
 end
@@ -160,11 +136,7 @@ Given(/^a configuration file masking some duplication smells called 'config.reek
 ---
 DuplicateMethodCall:
   allow_calls:
-    - puts\\(@s.title\\)
-UncommunicativeVariableName:
-  enabled: false
-UncommunicativeMethodName:
-  enabled: false
+    - puts\\(@foo.bar\\)
   EOS
 end
 
@@ -179,15 +151,6 @@ UncommunicativeVariableName:
   EOS
 end
 
-Given(/^a minimal dirty file called 'minimal_dirty.rb' in a subdirectory$/) do
-  write_file 'subdir/minimal_dirty.rb', <<-EOS
-class C
-  def m
-  end
-end
-  EOS
-end
-
 When(/^I run "reek (.*?)" in the subdirectory$/) do |args|
   cd 'subdir'
   reek(args)
@@ -197,9 +160,7 @@ Given(/^a masking configuration file in the HOME directory$/) do
   set_env('HOME', File.expand_path(File.join(current_dir, 'home')))
   write_file('home/config.reek', <<-EOS)
 ---
-IrresponsibleModule:
-  enabled: false
-UncommunicativeModuleName:
+DuplicateMethodCall:
   enabled: false
 UncommunicativeMethodName:
   enabled: false

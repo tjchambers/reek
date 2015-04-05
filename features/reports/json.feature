@@ -19,35 +19,31 @@ Feature: Report smells using simple JSON layout
       """
       [
           {
-              "smell_category": "IrresponsibleModule",
-              "smell_type": "IrresponsibleModule",
+              "smell_category": "Duplication",
+              "smell_type": "DuplicateMethodCall",
               "source": "minimal_dirty.rb",
-              "context": "C",
-              "lines": [
-                  1
-              ],
-              "message": "has no descriptive comment",
-              "name": "C"
+              "context": "Smelly#m",
+              "lines": [ 4, 5 ],
+              "message": "calls @foo.bar 2 times",
+              "name": "@foo.bar",
+              "count": 2
           },
           {
-              "smell_category": "UncommunicativeName",
-              "smell_type": "UncommunicativeModuleName",
+              "smell_category": "Duplication",
+              "smell_type": "DuplicateMethodCall",
               "source": "minimal_dirty.rb",
-              "context": "C",
-              "lines": [
-                  1
-              ],
-              "message": "has the name 'C'",
-              "name": "C"
+              "context": "Smelly#m",
+              "lines": [ 4, 5 ],
+              "message": "calls puts(@foo.bar) 2 times",
+              "name": "puts(@foo.bar)",
+              "count": 2
           },
           {
               "smell_category": "UncommunicativeName",
               "smell_type": "UncommunicativeMethodName",
               "source": "minimal_dirty.rb",
-              "context": "C#m",
-              "lines": [
-                  2
-              ],
+              "context": "Smelly#m",
+              "lines": [ 3 ],
               "message": "has the name 'm'",
               "name": "m"
           }

@@ -125,18 +125,15 @@ Feature: Correctly formatted reports
       | -V --no-empty-headings |
 
   Scenario Outline: --no-line-numbers turns off line numbers
-    Given a smelly file called 'smelly.rb'
-    When I run reek <option> smelly.rb
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    When I run reek <option> minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      smelly.rb -- 6 warnings:
-        Dirty has the variable name '@s' (UncommunicativeVariableName)
-        Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        Dirty#a calls puts(@s.title) 2 times (DuplicateMethodCall)
-        Dirty#a contains iterators nested 2 deep (NestedIterators)
-        Dirty#a has the name 'a' (UncommunicativeMethodName)
-        Dirty#a has the variable name 'x' (UncommunicativeVariableName)
+      minimal_dirty.rb -- 3 warnings:
+        Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
     Examples:
@@ -146,18 +143,15 @@ Feature: Correctly formatted reports
       | -V --no-line-numbers |
 
   Scenario Outline: --line-numbers turns on line numbers
-    Given a smelly file called 'smelly.rb'
-    When I run reek <option> smelly.rb
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    When I run reek <option> minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      smelly.rb -- 6 warnings:
-        [5]:Dirty has the variable name '@s' (UncommunicativeVariableName)
-        [4, 6]:Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        [4, 6]:Dirty#a calls puts(@s.title) 2 times (DuplicateMethodCall)
-        [5]:Dirty#a contains iterators nested 2 deep (NestedIterators)
-        [3]:Dirty#a has the name 'a' (UncommunicativeMethodName)
-        [5]:Dirty#a has the variable name 'x' (UncommunicativeVariableName)
+      minimal_dirty.rb -- 3 warnings:
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
     Examples:
@@ -167,18 +161,15 @@ Feature: Correctly formatted reports
       | --no-line-numbers -n             |
 
   Scenario Outline: --single-line shows filename and one line number
-    Given a smelly file called 'smelly.rb'
-    When I run reek <option> smelly.rb
+    Given a minimal dirty file called 'minimal_dirty.rb'
+    When I run reek <option> minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      smelly.rb -- 6 warnings:
-        smelly.rb:5: Dirty has the variable name '@s' (UncommunicativeVariableName)
-        smelly.rb:4: Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        smelly.rb:4: Dirty#a calls puts(@s.title) 2 times (DuplicateMethodCall)
-        smelly.rb:5: Dirty#a contains iterators nested 2 deep (NestedIterators)
-        smelly.rb:3: Dirty#a has the name 'a' (UncommunicativeMethodName)
-        smelly.rb:5: Dirty#a has the variable name 'x' (UncommunicativeVariableName)
+      minimal_dirty.rb -- 3 warnings:
+        minimal_dirty.rb:4: Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        minimal_dirty.rb:4: Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        minimal_dirty.rb:3: Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
     Examples:
@@ -223,9 +214,9 @@ Feature: Correctly formatted reports
     And it reports:
       """
       minimal_dirty.rb -- 3 warnings:
-        [1]:C has no descriptive comment (IrresponsibleModule) [https://github.com/troessner/reek/wiki/Irresponsible-Module]
-        [1]:C has the name 'C' (UncommunicativeModuleName) [https://github.com/troessner/reek/wiki/Uncommunicative-Module-Name]
-        [2]:C#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
+        [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]
       """
 
     Examples:
@@ -240,9 +231,9 @@ Feature: Correctly formatted reports
     And it reports:
       """
       minimal_dirty.rb -- 3 warnings:
-        C has no descriptive comment (IrresponsibleModule) [https://github.com/troessner/reek/wiki/Irresponsible-Module]
-        C has the name 'C' (UncommunicativeModuleName) [https://github.com/troessner/reek/wiki/Uncommunicative-Module-Name]
-        C#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]
+        Smelly#m calls @foo.bar 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
+        Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
+        Smelly#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]
       """
 
     Examples:

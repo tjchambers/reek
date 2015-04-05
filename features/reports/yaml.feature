@@ -18,28 +18,32 @@ Feature: Report smells using simple YAML layout
     And it reports this yaml:
       """
       ---
-      - smell_category: IrresponsibleModule
-        smell_type: IrresponsibleModule
+      - smell_category: Duplication
+        smell_type: DuplicateMethodCall
         source: minimal_dirty.rb
-        context: C
+        context: Smelly#m
         lines:
-        - 1
-        message: has no descriptive comment
-        name: C
-      - smell_category: UncommunicativeName
-        smell_type: UncommunicativeModuleName
+        - 4
+        - 5
+        message: calls @foo.bar 2 times
+        name: "@foo.bar"
+        count: 2
+      - smell_category: Duplication
+        smell_type: DuplicateMethodCall
         source: minimal_dirty.rb
-        context: C
+        context: Smelly#m
         lines:
-        - 1
-        message: has the name 'C'
-        name: C
+        - 4
+        - 5
+        message: calls puts(@foo.bar) 2 times
+        name: puts(@foo.bar)
+        count: 2
       - smell_category: UncommunicativeName
         smell_type: UncommunicativeMethodName
         source: minimal_dirty.rb
-        context: C#m
+        context: Smelly#m
         lines:
-        - 2
+        - 3
         message: has the name 'm'
         name: m
       """

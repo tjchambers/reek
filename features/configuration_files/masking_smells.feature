@@ -4,26 +4,23 @@ Feature: Masking smells using config files
   I want to mask some smells using config files
 
   Scenario: empty config file is ignored
-    Given a smelly file called 'smelly.rb'
+    Given a minimal dirty file called 'minimal_dirty.rb'
     And an empty configuration file called 'empty.reek'
-    When I run reek -c empty.reek smelly.rb
+    When I run reek -c empty.reek minimal_dirty.rb
     Then it reports the error 'Warning: Invalid configuration file "empty.reek" -- Empty file'
     And the exit status indicates smells
     And it reports:
       """
-      smelly.rb -- 6 warnings:
-        [5]:Dirty has the variable name '@s' (UncommunicativeVariableName)
-        [4, 6]:Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        [4, 6]:Dirty#a calls puts(@s.title) 2 times (DuplicateMethodCall)
-        [5]:Dirty#a contains iterators nested 2 deep (NestedIterators)
-        [3]:Dirty#a has the name 'a' (UncommunicativeMethodName)
-        [5]:Dirty#a has the variable name 'x' (UncommunicativeVariableName)
+      minimal_dirty.rb -- 3 warnings:
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
   Scenario: corrupt config file prevents normal output
-    Given a smelly file called 'smelly.rb'
+    Given a minimal dirty file called 'minimal_dirty.rb'
     And a corrupt configuration file called 'corrupt.reek'
-    When I run reek -c corrupt.reek smelly.rb
+    When I run reek -c corrupt.reek minimal_dirty.rb
     Then it reports the error 'Error: Invalid configuration file "corrupt.reek" -- Not a hash'
     And the exit status indicates an error
     And it reports nothing
@@ -33,28 +30,22 @@ Feature: Masking smells using config files
     Then it reports the error "Error: No such file - not_here.rb"
 
   Scenario: masking smells in the configuration file
-    Given a smelly file called 'smelly.rb'
+    Given a minimal dirty file called 'minimal_dirty.rb'
     And a masking configuration file called 'config.reek'
-    When I run reek -c config.reek smelly.rb
-    Then the exit status indicates smells
-    And it reports:
-      """
-      smelly.rb -- 3 warnings:
-        [4, 6]:Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        [4, 6]:Dirty#a calls puts(@s.title) 2 times (DuplicateMethodCall)
-        [5]:Dirty#a contains iterators nested 2 deep (NestedIterators)
-      """
+    When I run reek -c config.reek minimal_dirty.rb
+    Then it succeeds
+    And it reports nothing
 
   Scenario: allow masking some calls for duplication smell
-    Given a smelly file called 'smelly.rb'
+    Given a minimal dirty file called 'minimal_dirty.rb'
     And a configuration file masking some duplication smells called 'config.reek'
-    When I run reek -c config.reek smelly.rb
+    When I run reek -c config.reek minimal_dirty.rb
     Then the exit status indicates smells
     And it reports:
       """
-      smelly.rb -- 2 warnings:
-        [4, 6]:Dirty#a calls @s.title 2 times (DuplicateMethodCall)
-        [5]:Dirty#a contains iterators nested 2 deep (NestedIterators)
+      minimal_dirty.rb -- 2 warnings:
+        [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
   Scenario: provide extra masking inline in comments
@@ -64,6 +55,7 @@ Feature: Masking smells using config files
     Then the exit status indicates smells
     And it reports:
       """
-      inline.rb -- 1 warning:
-        [5, 7]:Dirty#a calls @s.title 2 times (DuplicateMethodCall)
+      inline.rb -- 2 warnings:
+        [5]:Dirty has the variable name '@s' (UncommunicativeVariableName)
+        [5]:Dirty#a has the variable name 'x' (UncommunicativeVariableName)
       """

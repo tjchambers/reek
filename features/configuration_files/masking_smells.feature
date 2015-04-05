@@ -4,23 +4,23 @@ Feature: Masking smells using config files
   I want to mask some smells using config files
 
   Scenario: empty config file is ignored
-    Given a minimal dirty file called 'minimal_dirty.rb'
+    Given a smelly file called 'smelly.rb'
     And an empty configuration file called 'empty.reek'
-    When I run reek -c empty.reek minimal_dirty.rb
+    When I run reek -c empty.reek smelly.rb
     Then it reports the error 'Warning: Invalid configuration file "empty.reek" -- Empty file'
     And the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
+      smelly.rb -- 3 warnings:
         [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
         [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
         [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
   Scenario: corrupt config file prevents normal output
-    Given a minimal dirty file called 'minimal_dirty.rb'
+    Given a smelly file called 'smelly.rb'
     And a corrupt configuration file called 'corrupt.reek'
-    When I run reek -c corrupt.reek minimal_dirty.rb
+    When I run reek -c corrupt.reek smelly.rb
     Then it reports the error 'Error: Invalid configuration file "corrupt.reek" -- Not a hash'
     And the exit status indicates an error
     And it reports nothing
@@ -30,20 +30,20 @@ Feature: Masking smells using config files
     Then it reports the error "Error: No such file - not_here.rb"
 
   Scenario: masking smells in the configuration file
-    Given a minimal dirty file called 'minimal_dirty.rb'
+    Given a smelly file called 'smelly.rb'
     And a masking configuration file called 'config.reek'
-    When I run reek -c config.reek minimal_dirty.rb
+    When I run reek -c config.reek smelly.rb
     Then it succeeds
     And it reports nothing
 
   Scenario: allow masking some calls for duplication smell
-    Given a minimal dirty file called 'minimal_dirty.rb'
+    Given a smelly file called 'smelly.rb'
     And a configuration file masking some duplication smells called 'config.reek'
-    When I run reek -c config.reek minimal_dirty.rb
+    When I run reek -c config.reek smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 2 warnings:
+      smelly.rb -- 2 warnings:
         [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
         [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
       """

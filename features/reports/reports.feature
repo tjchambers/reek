@@ -125,12 +125,12 @@ Feature: Correctly formatted reports
       | -V --no-empty-headings |
 
   Scenario Outline: --no-line-numbers turns off line numbers
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek <option> minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
+      smelly.rb -- 3 warnings:
         Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
         Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
         Smelly#m has the name 'm' (UncommunicativeMethodName)
@@ -143,12 +143,12 @@ Feature: Correctly formatted reports
       | -V --no-line-numbers |
 
   Scenario Outline: --line-numbers turns on line numbers
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek <option> minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
+      smelly.rb -- 3 warnings:
         [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
         [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
         [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)
@@ -161,15 +161,15 @@ Feature: Correctly formatted reports
       | --no-line-numbers -n             |
 
   Scenario Outline: --single-line shows filename and one line number
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek <option> minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
-        minimal_dirty.rb:4: Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
-        minimal_dirty.rb:4: Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
-        minimal_dirty.rb:3: Smelly#m has the name 'm' (UncommunicativeMethodName)
+      smelly.rb -- 3 warnings:
+        smelly.rb:4: Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
+        smelly.rb:4: Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
+        smelly.rb:3: Smelly#m has the name 'm' (UncommunicativeMethodName)
       """
 
     Examples:
@@ -208,12 +208,12 @@ Feature: Correctly formatted reports
       | smelly  |
 
   Scenario Outline: -U or --wiki-links adds helpful links to smell warnings
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek <option> minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
+      smelly.rb -- 3 warnings:
         [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
         [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
         [3]:Smelly#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]
@@ -225,12 +225,12 @@ Feature: Correctly formatted reports
       | --wiki-links  |
 
   Scenario Outline: --wiki-links is independent of --line-numbers
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek <option> minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek <option> smelly.rb
     Then the exit status indicates smells
     And it reports:
       """
-      minimal_dirty.rb -- 3 warnings:
+      smelly.rb -- 3 warnings:
         Smelly#m calls @foo.bar 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
         Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall) [https://github.com/troessner/reek/wiki/Duplicate-Method-Call]
         Smelly#m has the name 'm' (UncommunicativeMethodName) [https://github.com/troessner/reek/wiki/Uncommunicative-Method-Name]

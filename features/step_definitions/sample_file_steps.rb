@@ -81,8 +81,8 @@ end
   EOS
 end
 
-Given(/^a minimal dirty file called 'minimal_dirty.rb'( in a subdirectory)?$/) do |in_subdir|
-  file_name = in_subdir ? 'subdir/minimal_dirty.rb' : 'minimal_dirty.rb'
+Given(/^a smelly file called 'smelly.rb'( in a subdirectory)?$/) do |in_subdir|
+  file_name = in_subdir ? 'subdir/smelly.rb' : 'smelly.rb'
   write_file file_name, <<-EOS
 # smelly class for testing purposes
 class Smelly

@@ -12,15 +12,15 @@ Feature: Report smells using simple YAML layout
     """
 
   Scenario: Indicate smells and print them as yaml when using files
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek --format yaml minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek --format yaml smelly.rb
     Then the exit status indicates smells
     And it reports this yaml:
       """
       ---
       - smell_category: Duplication
         smell_type: DuplicateMethodCall
-        source: minimal_dirty.rb
+        source: smelly.rb
         context: Smelly#m
         lines:
         - 4
@@ -30,7 +30,7 @@ Feature: Report smells using simple YAML layout
         count: 2
       - smell_category: Duplication
         smell_type: DuplicateMethodCall
-        source: minimal_dirty.rb
+        source: smelly.rb
         context: Smelly#m
         lines:
         - 4
@@ -40,7 +40,7 @@ Feature: Report smells using simple YAML layout
         count: 2
       - smell_category: UncommunicativeName
         smell_type: UncommunicativeMethodName
-        source: minimal_dirty.rb
+        source: smelly.rb
         context: Smelly#m
         lines:
         - 3

@@ -3,12 +3,12 @@ Feature: Reports total number of code smells
   Reek outputs the total number of smells among all files inspected.
 
   Scenario: Does not output total number of smells when inspecting single file
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek smelly.rb
     Then the exit status indicates smells
     And it reports:
     """
-    minimal_dirty.rb -- 3 warnings:
+    smelly.rb -- 3 warnings:
       [4, 5]:Smelly#m calls @foo.bar 2 times (DuplicateMethodCall)
       [4, 5]:Smelly#m calls puts(@foo.bar) 2 times (DuplicateMethodCall)
       [3]:Smelly#m has the name 'm' (UncommunicativeMethodName)

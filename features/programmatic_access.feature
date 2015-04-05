@@ -4,11 +4,11 @@ Feature: Using reek programmatically
   I want to be able to use its classes
 
   Scenario:
-    Given a minimal dirty file called 'minimal_dirty.rb'
+    Given a smelly file called 'smelly.rb'
     And a file named "examine.rb" with:
       """
       require 'reek'
-      examiner = Reek::Examiner.new(['minimal_dirty.rb'])
+      examiner = Reek::Examiner.new(['smelly.rb'])
       examiner.smells.each do |smell|
         puts smell.message
       end

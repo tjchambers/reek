@@ -12,8 +12,8 @@ Feature: Report smells using simple JSON layout
     """
 
   Scenario: Indicate smells and print them as JSON when using files
-    Given a minimal dirty file called 'minimal_dirty.rb'
-    When I run reek --format json minimal_dirty.rb
+    Given a smelly file called 'smelly.rb'
+    When I run reek --format json smelly.rb
     Then the exit status indicates smells
     And it reports this JSON:
       """
@@ -21,7 +21,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "Duplication",
               "smell_type": "DuplicateMethodCall",
-              "source": "minimal_dirty.rb",
+              "source": "smelly.rb",
               "context": "Smelly#m",
               "lines": [ 4, 5 ],
               "message": "calls @foo.bar 2 times",
@@ -31,7 +31,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "Duplication",
               "smell_type": "DuplicateMethodCall",
-              "source": "minimal_dirty.rb",
+              "source": "smelly.rb",
               "context": "Smelly#m",
               "lines": [ 4, 5 ],
               "message": "calls puts(@foo.bar) 2 times",
@@ -41,7 +41,7 @@ Feature: Report smells using simple JSON layout
           {
               "smell_category": "UncommunicativeName",
               "smell_type": "UncommunicativeMethodName",
-              "source": "minimal_dirty.rb",
+              "source": "smelly.rb",
               "context": "Smelly#m",
               "lines": [ 3 ],
               "message": "has the name 'm'",
